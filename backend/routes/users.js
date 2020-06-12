@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const db = require('../models/database');
 const User = require('../models/user');
-
+const Sequelize = require('sequelize');
 //Handle User routes
 
 //Load all users
@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
   User.findAll()
     .then(users => {
       console.log(users);
-      res.sendStatus(200);
     })
     .catch(err => console.log(err))
 })

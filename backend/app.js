@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
 
+app.get("/",(req, res) => res.send('Home Page'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -48,7 +49,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get("/",(req, res) => res.send('Home Page'));
+
 
 module.exports = app;
 
