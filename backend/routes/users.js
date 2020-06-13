@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
-const db = require('../models/database');
-const User = require('../models/user');
+
+const db = require('../db/database');
+const User = require('../db/user');
 const Sequelize = require('sequelize');
-//Handle User routes
+
+
 
 //Load all users
 router.get('/', function(req, res, next) {
@@ -13,7 +15,7 @@ router.get('/', function(req, res, next) {
       console.log(users);
     })
     .catch(err => console.log(err))
-})
+});
 
 //Create a user
 router.get('/create', function(req, res, next) {
@@ -30,6 +32,6 @@ router.get('/create', function(req, res, next) {
     })
     .then(user => res.redirect('/'))
     .catch(err => console.log(err))
-})
+});
 
 module.exports = router;

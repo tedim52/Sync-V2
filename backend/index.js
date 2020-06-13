@@ -1,0 +1,46 @@
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+
+//Routes to pages
+var usersRouter = require('./routes/users');
+
+//Connect to db
+const db = require('./db/database');
+
+db.authenticate()
+    .then(()=>console.log('Connection has been established successfully.'))
+    .catch(err => console.error('Unable to connect to the database:', err));
+
+//Setup Spotify Web API access
+const spotfiyApi = require('./loaders/spotify');
+
+// Retrieve an access token
+spotifyApi.clientCredentialsGrant().then(
+  function(data) {
+    console.log('The access token expires in ' + data.body['expires_in']);
+    console.log('The access token is ' + data.body['access_token']);
+
+    // Save the access token so that it's used in future calls
+    spotifyApi.setAccessToken(data.body['access_token']);
+  },
+  function(err) {
+    console.log(
+      'Something went wrong when retrieving an access token',
+      err.message
+    );
+  }
+);
+
+var app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+app.use('/users', usersRouter);
+
+app.get("/",(req, res) => res.send('Home Page'));
+
+app.listen(3000, ()=>console.log("working"));
+module.exports = app;
