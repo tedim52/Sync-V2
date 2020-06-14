@@ -5,7 +5,7 @@ const db = require('../db/database');
 const User = require('../db/user');
 const Sequelize = require('sequelize');
 
-
+//User routes
 
 //Load all users
 router.get('/', function(req, res, next) {

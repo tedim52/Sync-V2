@@ -2,6 +2,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 
+//Entry point
+
 //Routes to pages
 var usersRouter = require('./routes/users');
 
@@ -13,7 +15,7 @@ db.authenticate()
     .catch(err => console.error('Unable to connect to the database:', err));
 
 //Setup Spotify Web API access
-const spotfiyApi = require('./loaders/spotify');
+const spotifyApi = require('./loaders/spotify');
 
 // Retrieve an access token
 spotifyApi.clientCredentialsGrant().then(

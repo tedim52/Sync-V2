@@ -1,22 +1,15 @@
 const {Sequelize, Model, DataTypes } = require('sequelize');
 const db = require('./database');
 
-console.log('Enters user');
-
 //User Model
-const User = db.define('User', {
-  // Model attributes are defined here
-  username: {
-    type: DataTypes.STRING,
-    allowNull: false
-  },
-  email: {
-    type: DataTypes.STRING
-  }
+class User extends Model {}
+User.init({
+  username: DataTypes.STRING,
+  email: DataTypes.TEXT
 }, {
-  // Other model options go here
-});
-
-console.log(User === db.models.User);
+  sequelize: db,
+  modelName: 'User',
+  tableName:'Users' });
+db.sync();
 
 module.exports = User;
