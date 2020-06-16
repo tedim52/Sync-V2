@@ -1,7 +1,6 @@
 const {Sequelize, Model, DataTypes } = require('sequelize');
 const db = require('./database');
 
-//User Model
 class User extends Model {}
 User.init({
   username: {
@@ -22,8 +21,25 @@ User.init({
   });
 //many to many relationship, user to syncs
 
+
+//Sync model
+class Sync extends Model {}
+Sync.init({
+  //user one
+  //user two
+  //track ids,
+  //playlist id
+
+
+}, {
+  sequelize: db,
+  modelName: 'Sync',
+  tabelName: 'Sync'
+});
+
+
 db.sync().then({
   force: true
 });
 
-module.exports = User;
+module.exports = { User: User, Sync: Sync };

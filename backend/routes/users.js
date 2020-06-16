@@ -18,6 +18,8 @@ router.get('/', function(req, res, next) {
 });
 
 //Create a user
+//if user already exists, redirect to load user syncs
+//can use middleware to accomplish
 router.get('/create', function(req, res, next) {
   const data = {
     username: "tedi.m52",
@@ -33,5 +35,7 @@ router.get('/create', function(req, res, next) {
     .then(user => res.redirect('/'))
     .catch(err => console.log(err))
 });
+
+//TODO: load users syncs route('/'), create a sync route(/sync), create sync in spotify('/spotify')
 
 module.exports = router;
