@@ -44,8 +44,6 @@ Sync.init({
 User.belongsToMany(Sync, { as: 'Syncs', through: 'user_sync', foreignKey: 'userId' });
 Sync.belongsToMany(User, { as: 'Users', through: 'user_sync', foreignKey: 'syncId' });
 
-db.sync().then({
-  force: true
-});
+db.sync();
 
 module.exports = { User: User, Sync: Sync };
