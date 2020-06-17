@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const db = require('../db/database');
-const User = require('../db/user');
+const models = require('../db/models');
 const Sequelize = require('sequelize');
 
 //User routes
@@ -10,7 +10,7 @@ const Sequelize = require('sequelize');
 //Load all users
 router.get('/', function(req, res, next) {
   res.send('Load all users');
-  User.findAll()
+  models.User.findAll()
     .then(users => {
       console.log(users);
     })
@@ -28,7 +28,7 @@ router.get('/create', function(req, res, next) {
   let { username, email } = data;
 
   //Insert into user table
-  User.create({
+  models.User.create({
     username,
     email
     })
