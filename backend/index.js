@@ -1,12 +1,12 @@
+/**
+* @author tediMitiku <tbm42@cornell.edu>
+*/
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 
-//Entry point
-
-//Routes
 var usersRouter = require('./routes/users');
 
 //Connect to db
@@ -25,7 +25,7 @@ spotifyApi.clientCredentialsGrant().then(
     console.log('The access token expires in ' + data.body['expires_in']);
     console.log('The access token is ' + data.body['access_token']);
 
-    // Save the access token so that it's used in future calls
+    // Save the access token to be used in future calls
     spotifyApi.setAccessToken(data.body['access_token']);
   },
   function(err) {

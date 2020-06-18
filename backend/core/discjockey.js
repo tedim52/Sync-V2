@@ -1,3 +1,23 @@
-//Syncing algorithm: discjockey
+/**
+* @author tediMitiku <tbm42@cornell.edu>
+*/
 
-//Take in two user ids and get the intersections of their songs
+/**
+* Creates sync between two spotify users.
+* @param {string} userOne- Spotify id
+* @param {string} userTwo - Spotify id
+* @return {JSON} - A JSON object of track ids.
+*/
+const createSync = function(userOne, userTwo) {
+
+
+
+
+
+
+
+
+
+}
+
+module.exports = createSync;
