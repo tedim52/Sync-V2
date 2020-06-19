@@ -5,7 +5,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
 /**
-* Sequelize instance
+* Sequelize instance.
 * @module
 */
 const db = new Sequelize(process.env.CONNECTION_URI);
