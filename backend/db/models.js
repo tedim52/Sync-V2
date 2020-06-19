@@ -1,7 +1,7 @@
 /**
 * @author tediMitiku <tbm42@cornell.edu>
 */
-const {Sequelize, Model, DataTypes } = require('sequelize');
+const {Sequelize, Model, DataTypes}  = require('sequelize');
 const db = require('./database');
 
 /**

@@ -6,7 +6,6 @@ var router = express.Router();
 const db = require('../db/database');
 const models = require('../db/models');
 const Sequelize = require('sequelize');
-const spotifyApi = require('../loaders/spotify');
 
 /**
 * Inserts user in database upon login if user doesn't exist.
@@ -19,14 +18,14 @@ router.get('/login', function(req, res, next) {
   }).then((user) => {
     console.log(user);
   })
-  .catch(UniqueConstainError => {
+  .catch(UniqueConstraintError => {
     console.log("User already exists");
   });
   res.redirect('/users');
 });
 
 /**
-* Creates a sync between two users.
+* Loads users information.
 */
 router.get('/', function(req, res, next) {
   res.send('Load all users');
@@ -35,6 +34,13 @@ router.get('/', function(req, res, next) {
       console.log(users);
     })
     .catch(err => console.log(err))
+});
+
+/*
+* Creates sync between two users.
+*/
+router.post('/sync', function(req, res, next) {
+//TODO: make sync
 });
 
 module.exports = router;

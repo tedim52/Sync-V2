@@ -2,14 +2,16 @@
 * @author tediMitiku <tbm42@cornell.edu>
 */
 
+const clientCredentials = require('../loaders/spotifyApi');
+
 /**
 * Creates sync between two spotify users.
-* @param {string} userOne- Spotify id
-* @param {string} userTwo - Spotify id
+* @param {string} authUser- Logged in user.
+* @param {string} userTwo - Spotify account user whats to sync with.
 * @return {JSON} - A JSON object of track ids.
 */
-const createSync = function(userOne, userTwo) {
-
+const createSync = function(authUser, userTwo) {
+//TODO: Write create sync algorithm
 
 
 

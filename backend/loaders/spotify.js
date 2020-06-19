@@ -5,7 +5,7 @@ require('dotenv').config();
 var SpotifyWebApi = require('spotify-web-api-node');
 
 /**
-* Spotify Web Api instace.
+* Spotify Web Api instance following client credentials flow.
 * @module
 */
 var spotifyApi = new SpotifyWebApi({
