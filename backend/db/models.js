@@ -1,7 +1,16 @@
-const {Sequelize, Model, DataTypes } = require('sequelize');
+/**
+* @author tediMitiku <tbm42@cornell.edu>
+*/
+const {Sequelize, Model, DataTypes}  = require('sequelize');
 const db = require('./database');
 
-//User model
+/**
+* A User
+* @typedfe {Object} User
+* @property {string} username - Spotify username.
+* @property {string} email
+  @property {Sync} syncs - The syncs the user has created with other users.
+*/
 class User extends Model {}
 User.init({
   username: {
@@ -21,7 +30,12 @@ User.init({
     timestamps: false
   });
 
-//Sync model
+  /**
+  * A Sync
+  * @typedfe {Object} Sync
+  * @property {string} playlistId - The Spotify playlist id if sync is made into playlist.
+  * @property {User} users - The users sync is assigned to.
+  */
 class Sync extends Model {}
 Sync.init({
   playlistId: {
