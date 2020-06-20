@@ -1,8 +1,9 @@
 /**
+* @fileoverview Main algorithm for creating synced playlist between users.
 * @author tediMitiku <tbm42@cornell.edu>
 */
 
-const clientCredentials = require('../loaders/spotifyApi');
+const spotifyApi = require('../loaders/spotifyApi');
 
 /**
 * Creates sync between two spotify users.

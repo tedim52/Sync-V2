@@ -1,4 +1,5 @@
 /**
+* @fileoverview Sets up sequelize connection to database on server.
 * @author tediMitiku <tbm42@cornell.edu>
 */
 require('dotenv').config();
