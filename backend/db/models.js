@@ -1,4 +1,5 @@
 /**
+* @fileoverview Defines User and Sync tables and relationship in database.
 * @author tediMitiku <tbm42@cornell.edu>
 */
 const {Sequelize, Model, DataTypes}  = require('sequelize');

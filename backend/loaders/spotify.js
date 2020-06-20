@@ -1,4 +1,5 @@
 /**
+* @fileoverview Setup Spotify Web Api useing app credentials.
 * @author tediMitiku <tbm42@cornell.edu>
 */
 require('dotenv').config();
