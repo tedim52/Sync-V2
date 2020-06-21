@@ -4,7 +4,7 @@
 */
 const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
-const User= require('../db/models').User;
+const User = require('../db/models').User;
 const Sequelize = require('sequelize');
 const spotifyApi = require('./spotify');
 
@@ -37,19 +37,23 @@ passport.use(
       callbackURL: 'http://localhost:3000/login/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
-      process.nextTick(function() {
+      process.nextTick(async function() {
         console.log(profile);
         spotifyApi.setAccessToken(accessToken);
-
-        User
-          .findOrCreate({where: {username: profile.username}, defaults: {email:profile.email}})
-          .then(([user, created]) => {
-            if(created) {
-              console.log(user);
-            }
-          })
-          .catch(err => console.log(err));
-
+        spotifyApi.setRefreshToken(refreshToken);
+        console.log(expires_in);
+        User.findOrCreate({
+          where: {
+            username: profile.username,
+            email: profile.emails[0].value
+          }
+        }).then(([user, created]) => {
+          if(created){
+            console.log('User created.');
+          } else {
+            console.log('User already exists.');
+          }
+        }).catch(err => console.log(err));
         done(null, profile);
       });
     }

@@ -4,9 +4,7 @@
 */
 var express = require('express');
 var router = express.Router();
-const db = require('../db/database');
-const User = require('../db/models').User;
-const Sequelize = require('sequelize');
+const {User, Sync} = require('../db/models');
 const passport = require('passport');
 
 /**
