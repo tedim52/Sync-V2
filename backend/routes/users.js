@@ -13,7 +13,7 @@ const createSync = require('../core/discjockey');
 router.get('/', function(req, res, next) {
   User.findAll()
     .then(users => {
-      res.send(users);
+      res.render("users.ejs", {users: users});
     })
     .catch(err => console.log(err))
 });

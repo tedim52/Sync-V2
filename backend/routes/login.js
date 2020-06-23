@@ -12,7 +12,7 @@ const passport = require('passport');
 * Redirects to user profile page.
 */
 router.get('/', function(req, res, next) {
-  res.send("Login");
+  res.render("login.ejs");
 });
 
 // GET /auth/spotify

@@ -2,6 +2,7 @@
 * @fileoverview Setting up authentication to Spotify using Passport.js.
 * @author tediMitiku <tbm42@cornell.edu>
 */
+require('dotenv').config();
 const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const User = require('../db/models').User;
@@ -32,8 +33,8 @@ passport.deserializeUser(function(obj, done) {
 passport.use(
   new SpotifyStrategy(
     {
-      clientID: process.env.client_id,
-      clientSecret: process.env.client_secret,
+      clientID: process.env.SPOTIFY_CLIENT_ID,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       callbackURL: 'http://localhost:3000/login/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
