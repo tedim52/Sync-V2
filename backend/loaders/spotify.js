@@ -10,8 +10,8 @@ var SpotifyWebApi = require('spotify-web-api-node');
 * @module
 */
 var spotifyApi = new SpotifyWebApi({
-  clientId: process.env.client_id,
-  clientSecret: process.env.client_secret
+  clientID: process.env.SPOTIFY_CLIENT_ID,
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET
 });
 
 module.exports = spotifyApi;
