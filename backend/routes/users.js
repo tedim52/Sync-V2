@@ -1,31 +1,34 @@
+/**
+* @fileoverview Handles home page user requests.
+* @author tediMitiku <tbm42@cornell.edu>
+*/
 var express = require('express');
 var router = express.Router();
+const {User, Sync} = require('../db/models');
+const createSync = require('../core/discjockey');
 
-const db = require('../db/database');
-const models = require('../db/models');
-const Sequelize = require('sequelize');
-const spotifyApi = require('../loaders/spotify');
-
-//When user logs in, create new user, if user doesn't already exist, or else
-router.get('/login', function(req, res, next) {
-  models.User.create({
-    username: req.body.username,
-    email: req.body.email
-  })
-  .then(user => {
-    res.redirect('/users');
-  })
-  .catch(err => console.log(err));//catch duplicate error
-});
-
-//Load user profile, previously created syncs, etc.
+/**
+* Loads users information.
+*/
 router.get('/', function(req, res, next) {
-  res.send('Load all users');
-  models.User.findAll()
+  User.findAll()
     .then(users => {
-      console.log(users);
+      res.send(users);
     })
     .catch(err => console.log(err))
+});
+
+/**
+* Creates sync between two users.
+* @param {string} user - Spotify user to create sync with.
+*/
+router.post('/sync', async function(req, res, next) {
+  var userForSync = req.body.user;
+  //check if this user is a spotify user
+  console.log(userForSync);
+  var sync = await createSync(userForSync);
+  console.log(sync);
+  res.send(sync);
 });
 
 module.exports = router;
