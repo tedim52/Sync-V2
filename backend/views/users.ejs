@@ -1,6 +1,9 @@
 <h1>Users Page</h1>
-<ul>
-    <% users.forEach((user) => { %>
-        <li><%=user.username%></li>
-    <% }) %>
-</ul>
+
+<% users.forEach((user) => { %>
+    <h2><%= user.username %></h2>
+    <ul>
+        <li>Email: <%= user.email %></li>
+        <li>Id: <%= user.spotifyId %></li>
+    </ul>
+<% }) %>

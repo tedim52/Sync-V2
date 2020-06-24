@@ -14,11 +14,21 @@ const db = require('./database');
 */
 class User extends Model {}
 User.init({
-  username: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull: false
-  },
+    username: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+    },
+    spotifyId: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull:false
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      allowNull:false
+    }
   }, {
     sequelize: db,
     modelName: 'User',
@@ -54,6 +64,6 @@ Sync.init({
 User.belongsToMany(Sync, { as: 'Syncs', through: 'user_sync', foreignKey: 'userId' });
 Sync.belongsToMany(User, { as: 'Users', through: 'user_sync', foreignKey: 'syncId' });
 
-db.sync();
+db.sync({ force: true });
 
 module.exports = { User: User, Sync: Sync };

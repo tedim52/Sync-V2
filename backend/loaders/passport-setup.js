@@ -35,19 +35,16 @@ passport.use(
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/login/callback'
+      callbackURL: process.env.CALLBACK_URI
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async function() {
-        console.log(profile);
-        spotifyApi.setAccessToken(accessToken);
-        spotifyApi.setRefreshToken(refreshToken);
-        console.log(expires_in);
         User.findOrCreate({
-          where: {
-            username: profile.username,
-            email: profile.emails[0].value
-          }
+            where: {
+                spotifyId: profile.id,
+                username: profile._json.display_name,
+                email: profile.emails[0].value
+            }
         }).then(([user, created]) => {
           if(created){
             console.log('User created.');
