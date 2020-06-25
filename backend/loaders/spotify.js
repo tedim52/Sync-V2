@@ -11,7 +11,8 @@ var SpotifyWebApi = require('spotify-web-api-node');
 */
 var spotifyApi = new SpotifyWebApi({
   clientID: process.env.SPOTIFY_CLIENT_ID,
-  clientSecret: process.env.SPOTIFY_CLIENT_SECRET
+  clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+  redirectUri: process.env.API_REDIRECT_URI
 });
 
 module.exports = spotifyApi;

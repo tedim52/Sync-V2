@@ -7,3 +7,13 @@
         <li>Id: <%= user.spotifyId %></li>
     </ul>
 <% }) %>
+
+<h1>Sync</h1>
+
+<form action="/users/sync" method="POST">
+    <div>
+        <label for="user">Enter user to sync with: </label>
+        <input type="text" name="user" placeholder="username to sync">
+    </div>
+    <button>Sync!</button>
+</form>
