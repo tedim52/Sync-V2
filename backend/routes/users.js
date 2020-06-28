@@ -10,10 +10,12 @@ const createSync = require('../core/discjockey');
 /**
 * Loads users information.
 */
-router.get('/', function(req, res, next) {
-  User.findAll()
+router.get('/', async function(req, res, next) {
+  await User.findAll()
     .then(users => {
-      res.render("users.ejs", {users: users});
+      res.json({
+          username: "Vaughn"
+      });
     })
     .catch(err => console.log(err))
 });

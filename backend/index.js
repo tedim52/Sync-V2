@@ -37,7 +37,9 @@ const passportSetup = require('./loaders/passport-setup');
 
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
-app.get("/",(req, res) => res.render('index.ejs'));
+app.get("/",(req, res) => res.json({
+    text: "Welcome to Sync!"
+}));
 
-app.listen(3000, ()=>console.log("Server started at http://localhost:3000"));
+app.listen(3001, ()=>console.log("Server started at http://localhost:3001"));
 module.exports = app;
