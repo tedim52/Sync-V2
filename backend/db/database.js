@@ -9,6 +9,6 @@ const { Sequelize } = require('sequelize');
 * Sequelize instance.
 * @module
 */
-const db = new Sequelize("mysql://root:cloud114@localhost/3306/sync");
+const db = new Sequelize(process.env.CONNECTION_URI);
 
 module.exports = db;

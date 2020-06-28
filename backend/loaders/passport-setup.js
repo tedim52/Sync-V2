@@ -32,9 +32,9 @@ passport.deserializeUser(function(obj, done) {
 passport.use(
   new SpotifyStrategy(
     {
-      clientID: process.env.client_id,
-      clientSecret: process.env.client_secret,
-      callbackURL: 'http://localhost:3000/login/callback'
+      clientID: process.env.SPOTIFY_CLIENT_ID,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+      callbackURL: process.env.CALLBACK_URI
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async function() {
