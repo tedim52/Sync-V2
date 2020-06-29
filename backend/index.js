@@ -41,9 +41,6 @@ app.get("/",(req, res) => res.json({
     text: "Welcome to Sync!"
 }));
 
-<<<<<<< HEAD
 app.listen(3001, ()=>console.log("Server started at http://localhost:3001"));
-=======
-app.listen(8080, ()=>console.log("localhost:8080"));
->>>>>>> df6e367303332128a6f4f0e7b79ef023de9343a7
+
 module.exports = app;

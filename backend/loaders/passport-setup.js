@@ -33,23 +33,14 @@ passport.deserializeUser(function(obj, done) {
 passport.use(
   new SpotifyStrategy(
     {
-<<<<<<< HEAD
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       callbackURL: process.env.CALLBACK_URI
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async function() {
-=======
-      clientID: process.env.client_id,
-      clientSecret: process.env.client_secret,
-      callbackURL: 'http://localhost:8080/login/callback'
-    },
-    function(accessToken, refreshToken, expires_in, profile, done) {
-      process.nextTick(async function() {
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.setRefreshToken(refreshToken);
->>>>>>> df6e367303332128a6f4f0e7b79ef023de9343a7
         User.findOrCreate({
             where: {
                 spotifyId: profile.id,

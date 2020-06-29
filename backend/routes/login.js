@@ -42,11 +42,7 @@ router.get(
   '/callback',
   passport.authenticate('spotify', { failureRedirect: '/' }),
   function(req, res) {
-<<<<<<< HEAD
-    res.redirect("/users")
-=======
-    res.redirect('http://localhost:8080');
->>>>>>> df6e367303332128a6f4f0e7b79ef023de9343a7
+    res.redirect('http://localhost:3001');
   }
 );
 

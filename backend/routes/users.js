@@ -25,7 +25,6 @@ router.get('/', async function(req, res, next) {
 * @param {string} user - Spotify user to create sync with.
 */
 router.post('/sync', async function(req, res, next) {
-<<<<<<< HEAD
   var userForSync = req.body.user;
   //check if this user is a spotify user
   var users = await User.findAll({
@@ -36,12 +35,10 @@ router.post('/sync', async function(req, res, next) {
   var sync = await createSync(users[0].spotifyId);
   console.log(sync);
   res.render("sync.ejs");
-=======
   let userForSync = req.body.user;
   //TODO: Check if this user is a spotify user
   let sync = await createSync(userForSync);
   res.send(sync);
->>>>>>> df6e367303332128a6f4f0e7b79ef023de9343a7
 });
 
 module.exports = router;

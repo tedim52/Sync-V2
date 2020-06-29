@@ -2,7 +2,6 @@
 * @fileoverview Main algorithm for creating synced playlist between users.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-
 const spotifyApi = require('../loaders/spotify');
 
 /**
@@ -10,26 +9,6 @@ const spotifyApi = require('../loaders/spotify');
 * @param {string} otherUser - Spotify account user whats to sync with.
 * @return {Array} - An Array of JSON objecs with song names and spotify ids.
 */
-<<<<<<< HEAD
-
-const createSync = async function(userId) {
-//TODO: Write create sync algorithm
-console.log("Getting user tracks")
-  var authUserTracks = await spotifyApi.getMySavedTracks({
-    limit:50,
-    offset:0
-  }).catch(err => console.log(err));
-  console.log(authUserTracks)
-  var holdBody = await authUserTracks.body.items;
-  var authUserSongNames = [];
-  holdBody.forEach(async function(track) {
-    console.log(track);
-    var song = await track.track.name;
-    console.log(song);
-    authUserSongNames.push(song);
-  });
-  return authUserSongNames;
-=======
 const createSync = async function(otherUser) {
   try {
     //Get names of both spotify users
@@ -78,7 +57,6 @@ const getPlaylistSongs = async function(playlistId) {
 const intersection = async function(listOne, listTwo) {
   let sync = listOne.filter(e => listTwo.includes(e));
   return sync;
->>>>>>> df6e367303332128a6f4f0e7b79ef023de9343a7
 }
 
 module.exports = createSync;
