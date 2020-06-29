@@ -2,8 +2,8 @@
 * @fileoverview Handles login/logout requests and sends authenticaiton request to passport.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
 const {User, Sync} = require('../db/models');
 const passport = require('passport');
 
@@ -42,7 +42,7 @@ router.get(
   '/callback',
   passport.authenticate('spotify', { failureRedirect: '/' }),
   function(req, res) {
-    res.redirect('http://localhost:3001');
+    res.redirect('http://localhost:8080');
   }
 );
 
