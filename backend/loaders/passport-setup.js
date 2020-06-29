@@ -34,14 +34,12 @@ passport.use(
     {
       clientID: process.env.client_id,
       clientSecret: process.env.client_secret,
-      callbackURL: 'http://localhost:3000/login/callback'
+      callbackURL: 'http://localhost:8080/login/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async function() {
-        console.log(profile);
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.setRefreshToken(refreshToken);
-        console.log(expires_in);
         User.findOrCreate({
           where: {
             username: profile.username,

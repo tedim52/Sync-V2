@@ -2,8 +2,8 @@
 * @fileoverview Handles home page user requests.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const {User, Sync} = require('../db/models');
 const createSync = require('../core/discjockey');
 
@@ -23,11 +23,9 @@ router.get('/', function(req, res, next) {
 * @param {string} user - Spotify user to create sync with.
 */
 router.post('/sync', async function(req, res, next) {
-  var userForSync = req.body.user;
-  //check if this user is a spotify user
-  console.log(userForSync);
-  var sync = await createSync(userForSync);
-  console.log(sync);
+  let userForSync = req.body.user;
+  //TODO: Check if this user is a spotify user
+  let sync = await createSync(userForSync);
   res.send(sync);
 });
 
