@@ -2,15 +2,15 @@
 * @fileoverview Entry point into Sync app.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var logger = require('morgan');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
+let express = require('express');
+let path = require('path');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let logger = require('morgan');
+let usersRouter = require('./routes/users');
+let loginRouter = require('./routes/login');
 
-var app = express();
+let app = express();
 
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -41,5 +41,9 @@ app.get("/",(req, res) => res.json({
     text: "Welcome to Sync!"
 }));
 
+<<<<<<< HEAD
 app.listen(3001, ()=>console.log("Server started at http://localhost:3001"));
+=======
+app.listen(8080, ()=>console.log("localhost:8080"));
+>>>>>>> df6e367303332128a6f4f0e7b79ef023de9343a7
 module.exports = app;
