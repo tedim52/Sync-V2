@@ -24,10 +24,14 @@ router.get('/', function(req, res, next) {
 * @param {string} user - Spotify user to create sync with.
 */
 router.post('/sync', async function(req, res, next) {
-  let userForSync = req.body.user;
+  let userForSync = req.body.syncUser;
   //TODO: Check if this user is a spotify user
   let sync = await createSync(userForSync);
-  res.send("Sync between  "+userForSync+" and "+req.user);
+  res.json({
+    authUser: "authUser",
+    syncUser: userForSync,
+    sync: sync
+  });
 });
 
 module.exports = router;

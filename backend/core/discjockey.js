@@ -24,6 +24,7 @@ const createSync = async function(otherUser) {
     let sync = await intersection(authUserSongs, otherUserSongs);
     return sync;
   } catch(e) {
+    console.log('AHHHH')
     console.log(e);
   }
 }
