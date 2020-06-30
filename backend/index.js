@@ -2,15 +2,23 @@
 * @fileoverview Entry point into Sync app.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-let express = require('express');
-let path = require('path');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
-let logger = require('morgan');
-let usersRouter = require('./routes/users');
-let loginRouter = require('./routes/login');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cookieSession = require('cookie-session');
+require('dotenv').config(); //secrets
+const logger = require('morgan');
+const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
 
-let app = express();
+const app = express();
+
+//Setup Cookie Session for persistent login
+app.use(cookieSession({
+  maxAge: 24*60*60*1000,
+  keys: process.env.COOKIE_KEY
+}));
 
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));

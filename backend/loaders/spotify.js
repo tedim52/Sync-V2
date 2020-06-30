@@ -2,7 +2,6 @@
 * @fileoverview Setup Spotify Web Api useing app credentials.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-require('dotenv').config();
 const SpotifyWebApi = require('spotify-web-api-node');
 
 /**
@@ -10,8 +9,8 @@ const SpotifyWebApi = require('spotify-web-api-node');
 * @module
 */
 const spotifyApi = new SpotifyWebApi({
-  clientId: process.env.client_id,
-  clientSecret: process.env.client_secret
+  clientId: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET
 });
 
 module.exports = spotifyApi;

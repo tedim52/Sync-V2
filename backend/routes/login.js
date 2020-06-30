@@ -2,8 +2,8 @@
 * @fileoverview Handles login/logout requests and sends authenticaiton request to passport.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-let express = require('express');
-let router = express.Router();
+const express = require('express');
+const router = express.Router();
 const {User, Sync} = require('../db/models');
 const passport = require('passport');
 
@@ -40,7 +40,7 @@ router.get(
 //   which, in this example, will redirect the user to the home page.
 router.get(
   '/callback',
-  passport.authenticate('spotify', { failureRedirect: '/' }),
+  passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('http://localhost:8080');
   }
@@ -50,5 +50,17 @@ router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed. Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
 
 module.exports = router;

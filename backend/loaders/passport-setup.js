@@ -15,14 +15,14 @@ const spotifyApi = require('./spotify');
 //   the user by ID when deserializing. However, since this example does not
 //   have a database of user records, the complete spotify profile is serialized
 //   and deserialized.
-passport.serializeUser(function(user, done) {
+passport.serializeUser((user, done)=> {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(obj, done) {
-  User.findByPk(obj.id).then(user => {
+passport.deserializeUser((id, done)=> {
+  User.findByPk(id).then(user => {
       done(null, user);
-  })
+  });
 });
 
 // Use the SpotifyStrategy within Passport.
@@ -37,7 +37,7 @@ passport.use(
       callbackURL: 'http://localhost:8080/login/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
-      process.nextTick(async function() {
+      process.nextTick(async ()=> {
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.setRefreshToken(refreshToken);
         User.findOrCreate({
@@ -48,11 +48,12 @@ passport.use(
         }).then(([user, created]) => {
           if(created){
             console.log('User created.');
+
           } else {
             console.log('User already exists.');
           }
+          done(null, user);
         }).catch(err => console.log(err));
-        done(null, profile);
       });
     }
   )
