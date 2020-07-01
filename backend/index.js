@@ -45,7 +45,7 @@ const passportSetup = require('./loaders/passport-setup');
 
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
-app.get("/",(req, res) => res.send('Home Page'));
+app.get("/",(req, res) => res.send('Sync API'));
 
 app.listen(8080, ()=>console.log("localhost:8080"));
 module.exports = app;
