@@ -3,6 +3,7 @@
 * @author tediMitiku <tbm42@cornell.edu>
 */
 let express = require('express');
+let session = require('express-session')
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let bodyParser = require('body-parser');
@@ -16,6 +17,12 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(session(session))
+app.use(session({
+  secret: 'kjasf56sdafkhj457nsadfkj',
+  resave: false,
+  saveUninitialized: false
+}))
 
 //Setup and authenticate db connection
 const db = require('./db/database');

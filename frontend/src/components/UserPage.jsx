@@ -1,25 +1,17 @@
-import React, { Component, Redirect } from 'react';
-import Sync from '/Sync'
+import React, { Component } from 'react';
+import Sync from './Sync.jsx'
 
 class UserPage extends Component {
   state = {
     users: [],
-    username: "v3nom_gwp",
+    authUser: "",
     sync: []
   }
 
   componentDidMount(){
     fetch("/users")
       .then(res => res.json())
-      .then(users => this.setState({ users: users }))
-  }
-
-  onSubmit = async () => {
-    fetch("/users/sync", {
-      method:"POST",
-      body: JSON.stringify({ user: this.state.username })
-    }).then(res => res.json())
-    .then(data => this.setState({ sync: data.sync }))
+      .then(json => this.setState({ users: json.users, authUser:json.authUser }))
   }
 
   render() {
@@ -35,20 +27,7 @@ class UserPage extends Component {
             </ul>
           </div>
         )}
-        <form action="/users/sync" method="POST">
-          <label for="syncUser">Enter user to sync with: </label>
-          <input
-            name="syncUser"
-            placeholder="username"
-            value={this.state.username}
-            onChange={e => this.setState({username: e.target.value})}
-          />
-          <button onCLick={() => this.onSubmit()}>Sync!</button>
-        </form>
-        <div>
-          <h2>Sync</h2>
-          <Sync />
-        </div>
+        <Sync />
       </div>
     );
   }

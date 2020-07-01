@@ -13,8 +13,7 @@ const createSync = require('../core/discjockey');
 router.get('/', function(req, res, next) {
   User.findAll()
     .then(users => {
-      res.json(users)
-      //res.render("users.ejs", {users: users});
+      res.json({users: users, authUser: req.session.user})
     })
     .catch(err => console.log(err))
 });
@@ -27,8 +26,21 @@ router.post('/sync', async function(req, res, next) {
   let userForSync = req.body.syncUser;
   //TODO: Check if this user is a spotify user
   let sync = await createSync(userForSync);
+  Sync.findOrCreate({
+      where: {
+        playlistId: "Sync between "+userForSync+" and ",
+        tracks: sync
+      }
+  }).then(([sync, created]) => {
+    if(created){
+      console.log('Sync created.');
+    } else {
+      console.log('Sync already exists.');
+    }
+  }).catch(err => console.log(err));
+
   res.json({
-    authUser: "authUser",
+    authUser: "",
     syncUser: userForSync,
     sync: sync
   });
