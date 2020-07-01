@@ -10,7 +10,7 @@ const createSync = require('../core/discjockey');
 /**
 * Loads users information.
 */
-router.get('/', function(req, res, next) {
+router.get('/', (req, res, next)=> {
   User.findAll()
     .then(users => {
       res.send(users);
@@ -22,11 +22,16 @@ router.get('/', function(req, res, next) {
 * Creates sync between two users.
 * @param {string} user - Spotify user to create sync with.
 */
-router.post('/sync', async function(req, res, next) {
-  let userForSync = req.body.user;
-  //TODO: Check if this user is a spotify user
-  let sync = await createSync(userForSync);
-  res.send(sync);
+router.post('/sync', async (req, res, next)=> {
+  console.log("Sync entered.");
+  const userForSync = req.body.user;
+  const sync = await createSync(userForSync);
+  console.log(sync);
+  res.send({
+    syncedUser: userForSync,
+    sync: sync
+  });
+  console.log("Sync Created.");
 });
 
 module.exports = router;

@@ -32,8 +32,8 @@ passport.deserializeUser((id, done)=> {
 passport.use(
   new SpotifyStrategy(
     {
-      clientID: process.env.client_id,
-      clientSecret: process.env.client_secret,
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
       callbackURL: 'http://localhost:8080/login/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
@@ -48,7 +48,6 @@ passport.use(
         }).then(([user, created]) => {
           if(created){
             console.log('User created.');
-
           } else {
             console.log('User already exists.');
           }
