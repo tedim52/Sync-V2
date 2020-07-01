@@ -35,7 +35,7 @@ passport.use(
     {
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: process.env.API_REDIRECT_URI
+      callbackURL: process.env.CALLBACK_URI
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async function() {

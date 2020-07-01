@@ -14,7 +14,7 @@ const createSync = async function(otherUser) {
   try {
     //Get names of both spotify users
     let authUserData = await spotifyApi.getMe();
-    let authUsername = await authUserData.body.display_name;
+    let authUsername = await authUserData.id;
     let otherUsername = otherUser;
 
     //Get songs from both users music libraries
@@ -24,7 +24,6 @@ const createSync = async function(otherUser) {
     let sync = await intersection(authUserSongs, otherUserSongs);
     return sync;
   } catch(e) {
-    console.log('AHHHH')
     console.log(e);
   }
 }
@@ -40,7 +39,6 @@ const getSongs = async function(username){
     });
     return userSongs;
   } catch(e) {
-    console.log("getSongs")
     console.log(e);
   }
 }
