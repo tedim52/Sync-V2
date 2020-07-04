@@ -14,7 +14,7 @@ const createSync = async function(otherUser) {
   try {
     //Get names of both spotify users
     const authUserData = await spotifyApi.getMe();
-    const authUsername = await authUserData.body.display_name;
+    const authUsername = await authUserData.body.display_name
     const otherUsername = otherUser;
 
     //Get songs from both users music libraries
@@ -69,5 +69,6 @@ const intersection = async function(listOne, listTwo) {
   let sync = listOne.filter(e => listTwo.includes(e));
   return sync;
 }
+
 
 module.exports = createSync;

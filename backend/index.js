@@ -6,7 +6,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
+const session = require('express-session');
 require('dotenv').config(); //secrets
 const logger = require('morgan');
 const usersRouter = require('./routes/users');
@@ -15,9 +15,10 @@ const loginRouter = require('./routes/login');
 const app = express();
 
 //Setup Cookie Session for persistent login
-app.use(cookieSession({
-  maxAge: 24*60*60*1000,
-  keys: process.env.COOKIE_KEY
+app.use(session({
+  secret: process.env.COOKIE_KEY,
+  saveUninitialized: true,
+  resave: true,
 }));
 
 app.use(logger('dev'));
