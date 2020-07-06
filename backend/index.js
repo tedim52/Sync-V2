@@ -2,15 +2,24 @@
 * @fileoverview Entry point into Sync app.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var logger = require('morgan');
-var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/login');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+require('dotenv').config(); //secrets
+const logger = require('morgan');
+const usersRouter = require('./routes/users');
+const loginRouter = require('./routes/login');
 
-var app = express();
+const app = express();
+
+//Setup Cookie Session for persistent login
+app.use(session({
+  secret: process.env.COOKIE_KEY,
+  saveUninitialized: true,
+  resave: true,
+}));
 
 app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
@@ -37,7 +46,7 @@ const passportSetup = require('./loaders/passport-setup');
 
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
-app.get("/",(req, res) => res.send('Home Page'));
+app.get("/",(req, res) => res.send('Sync API'));
 
-app.listen(3000, ()=>console.log("localhost:3000"));
+app.listen(8080, ()=>console.log("localhost:8080"));
 module.exports = app;

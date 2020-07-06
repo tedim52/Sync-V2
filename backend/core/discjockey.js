@@ -2,87 +2,71 @@
 * @fileoverview Main algorithm for creating synced playlist between users.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-
 const spotifyApi = require('../loaders/spotify');
 
 /**
 * Creates sync between two spotify users.
-* @param {string} userTwo - Spotify account user whats to sync with.
-* @return {Array} - A JSON object of track ids.
+* @param {string} otherUser - Spotify account user whats to sync with.
+* @return {Array} - An Array of strings with song names.
 */
-const createSync = async function(userTwo) {
-//TODO: Write create sync algorithm
-  /*
-  var authUserSongs = [];
-  var userTwoSongs = [];
+const createSync = async function(otherUser) {
+  try {
+    //Get names of both spotify users
+    const authUserData = await spotifyApi.getMe();
+    const authUsername = await authUserData.body.display_name
+    const otherUsername = otherUser;
 
-  var authUserData = await spotifyApi.getMe();
-  var authUserName = await authUserData.display_name;
-  var userTwoName = userTwo;
+    //Get songs from both users music libraries
+    const [authUserSongs, otherUserSongs] = await Promise.all([getSongs(authUsername),
+                                                                 getSongs(otherUsername)]);
+    //Take intersection of song lists
+    const sync = await intersection(authUserSongs, otherUserSongs);
+    return sync;
+  } catch(e) {
+    console.log(e);
+  }
+}
 
-  //Get auth users song library
-  var authUserTracks = await spotifyApi.getMySavedTracks({
-    limit:50,
-    offset:0
-  }).catch(err => console.log(err));
-
-  var songObjects = await authUserTracks.body.items
-  console.log(songObjects);
-  songObjects.forEach(async function(track) {
-    var song = await track.track.name;
-    console.log(song);
-    var trackId = await track.track.id;
-    authUserSongs.push({name:song, spotifyId:trackId});
-  });
-
-  console.log(authUserSongs);
-
-  //Get songs from auth users playlists
-
-  var authUserPlaylists = await spotifyApi.getUserPlaylists(authUserName).body;
-  var authUserPlaylistIds = [];
-
-  console.log(authUserPlaylists);
-
-  authUserPlaylists.forEach(async function(playlist) {
-    var playlistId = await playlist.id;
-    authUserPlaylistIds.push(playlistId);
-  });
-  console.log(authUserPlaylistIds);
-  /*
-  authUserPlaylistIds.forEach(async function(id) {
-    var playlistTracks = await spotifyApi.getPlaylist(id).items;
-    playlistTracks.forEach(async function(track) {
-      var song = await track.track.name;
-      var trackId = await track.track.id;
-      authUserSongs.push({name:song, spotifyId:trackId});
+/**
+* Gets every song from all the playlists in spotify users account.
+* @param username - Spotify user to retrieve songs from.
+* @return {Array}  - An Array of strings with song names.
+*/
+const getSongs = async function(username){
+  try {
+    let userSongs = [];
+    const userPlaylistsJSON = await spotifyApi.getUserPlaylists(username);
+    const userPlaylists = await userPlaylistsJSON.body.items;
+    const songLists = await Promise.all(userPlaylists.map(async ({id})=> getPlaylistSongs(id)));
+    songLists.forEach(playlist => {
+      userSongs = userSongs.concat(playlist);
     });
-  });
+    return userSongs;
+  } catch(e) {
+    console.log(e);
+  }
+}
 
-  //Get songs from user two's playlists
-  var userTwoPlaylists = await spotifyApi.getUserPlaylists(userTwo).body.items;
-  var userTwoPlaylistIds = [];
-  userTwoPlaylists.forEach(async function(playlist) {
-    var playlistId = await playlist.id;
-    userTwoPlaylistIds.push(playlistId);
-  });
+/**
+* Gets every song in a playlist.
+* @param playlistId - Spotify id of playlist to get songs from.
+* @return {Array}  - An Array of strings with names of songs in the playlist.
+*/
+const getPlaylistSongs = async function(playlistId) {
+  try {
+    let songs = [];
+    const tracksJSON = await spotifyApi.getPlaylist(playlistId);
+    const tracks = await tracksJSON.body.tracks.items;
+    const trackList = await Promise.all(tracks.map(async ({track})=> songs.push(track.name)));
+    return songs;
+  } catch(e) {
+    console.log(e);
+  }
+}
 
-  userTwoPlaylistIds.forEach(async function(id) {
-    var playlistTracks = await spotifyApi.getPlaylist(id).items;
-    playlistTracks.forEach(async function(track) {
-      var song = await track.track.name;
-      var trackId = await track.track.id;
-      userTwoSongs.push({name:song, spotifyId:trackId});
-    });
-  });
-
-  //Take intersection of songs
-  var sync = []
-  sync = authUserSongs.filter(track => userTwoSongs.includes(track));
+const intersection = async function(listOne, listTwo) {
+  let sync = listOne.filter(e => listTwo.includes(e));
   return sync;
-  */
-  return { songs:["Be lazy", "Take Me to Church", "Hop Off a Jet"] };
-
 }
 
 
