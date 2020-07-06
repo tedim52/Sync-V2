@@ -20,7 +20,6 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
-
 router.get('/', (req, res, next)=> {
   if (req.isAuthenticated()) {
     res.redirect("http://localhost:3000/users");
@@ -38,10 +37,7 @@ router.get('/auth/spotify',
             passport.authenticate('spotify', {
               scope: ['user-read-email', 'user-read-private', 'user-library-read', 'playlist-read-collaborative',
                       'playlist-modify-public'],
-                        showDialog: true
-                      }), (req, res)=> {
-    // The request will be redirected to spotify for authentication, so this
-    // function will not be called.
+              showDialog: true }), (req, res)=> {
   }
 );
 
@@ -62,6 +58,5 @@ router.get('/logout', (req, res)=> {
   req.logout();
   res.redirect('/');
 });
-
 
 module.exports = router;
