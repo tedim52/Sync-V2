@@ -17,7 +17,6 @@ app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(session(session))
 app.use(session({
   secret: 'kjasf56sdafkhj457nsadfkj',
   resave: false,
