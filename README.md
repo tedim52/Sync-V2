@@ -6,4 +6,8 @@ Wouldn’t it be nice to have a playlist that combines music that everyone will 
 
 Sync is a web app that will allow music listeners to “sync” their music preferences with their friends to create playlists of songs everyone enjoys listening to. Sync attempts to venture into untapped potential for social music discovery by bringing people together through music.
 
-Planning to move to mobile.
+Created using ReactJS frontend, and Express/NodeJs backend. 
+
+Created by @Tedi Mitiku @Vaughn Campos @Eric Osband
+
+planning to move to mobile.
