@@ -35,7 +35,7 @@ User.init({
   * A Sync
   * @typedfe {Object} Sync
   * @property {string} playlistId - The Spotify playlist id if sync is made into playlist.
-  * @property {User} users - The users sync is assigned to.
+  * @property {Object} users - The users sync is assigned to.
   */
 class Sync extends Model {}
 Sync.init({

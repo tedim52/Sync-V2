@@ -57,13 +57,16 @@ const getPlaylistSongs = async function(playlistId) {
     let songs = [];
     const tracksJSON = await spotifyApi.getPlaylist(playlistId);
     const tracks = await tracksJSON.body.tracks.items;
-    const trackList = await Promise.all(tracks.map(async ({track})=> songs.push(track.name)));
+    const trackList = await Promise.all(tracks.map(async ({track})=> songs.push(track.uri)));
     return songs;
   } catch(e) {
     console.log(e);
   }
 }
 
+/**
+* Returns a list containing the intersection of two lists.
+*/
 const intersection = async function(listOne, listTwo) {
   let sync = listOne.filter(e => listTwo.includes(e));
   return sync;
