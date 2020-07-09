@@ -8,13 +8,7 @@ const User = require('../db/models').User;
 const Sequelize = require('sequelize');
 const spotifyApi = require('./spotify');
 
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session. Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing. However, since this example does not
-//   have a database of user records, the complete spotify profile is serialized
-//   and deserialized.
+// Passport session setup for persistent login
 passport.serializeUser((user, done)=> {
   done(null, user.id);
 });
@@ -25,6 +19,7 @@ passport.deserializeUser((id, done)=> {
   });
 });
 
+//Allow permanent Spotify API data retrieval through refresh token
 var tokenExpirationEpoch;
 var expireTime;
 var numberOfTimesUpdated = 0;
@@ -41,12 +36,12 @@ setInterval(()=> {
     );
     numberOfTimesUpdated++;
 
-    // Times up, refresh the token and stop printing .
+    // Times up, refresh the token and stop printing
     if (numberOfTimesUpdated > 2) {
       numberOfTimesUpdated = 0;
       clearInterval(this);
 
-      // Refresh token and print the new time to expiration.
+      // Refresh token and print the new time to expiration
       spotifyApi.refreshAccessToken().then((data)=> {
         tokenExpirationEpoch = new Date().getTime() / 1000 + expireTime;
         console.log(
@@ -57,7 +52,7 @@ setInterval(()=> {
       }).catch((err)=> { console.log('Could not refresh the token!', err.message) });
     }
   }
-}, 72000);
+}, 720,000);
 
 //Spotify Strategy for user authentication
 passport.use(
