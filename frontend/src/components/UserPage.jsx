@@ -14,7 +14,8 @@ class UserPage extends Component {
   render() {
     return (
       <div>
-        <h1>Logged in as {this.state.json.username} </h1>
+        <h1>Profile</h1>
+        <h2>Logged in as {this.state.json.username} </h2>
         <img src={this.state.json.image}></img>
         <ul>
           <li>Followers: {this.state.json.followers} </li>
@@ -22,8 +23,7 @@ class UserPage extends Component {
         </ul>
         <div>
           <h2>Sync</h2>
-          <Sync/>
-          <h2>Past Syncs</h2>
+          <Sync authUser={this.state.json.username}/>
         </div>
       </div>
     );
