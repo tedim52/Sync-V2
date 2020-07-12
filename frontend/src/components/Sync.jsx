@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 class Sync extends Component {
 
   state = {
-    username: this.props.username,
-    sync: []
+    formUsername: this.props.username,
+    sync: [],
+    syncedUser: null
   }
 
 
   onSubmit = async () => {
-    console.log(this.state.username);
     const response = await fetch("/users/sync",
                           { method:"POST",
                             headers: {
@@ -18,9 +18,7 @@ class Sync extends Component {
                             body: JSON.stringify({user: this.state.username})
                           }).catch(e => console.log(e));
     const data = await response.json();
-    console.log(data)
     this.setState({ sync: data.sync});
-    console.log(data);
   }
 
   render() {
@@ -31,10 +29,11 @@ class Sync extends Component {
           <input
             name="syncUser"
             placeholder="username"
-            value={this.state.username}
-            onChange={e => this.setState({username: e.target.value})}
+            value={this.state.formUsername}
+            onChange={e => this.setState({formUsername: e.target.value})}
             />
         </form>
+        <h3> {this.state.syncedUser} </h3>
         <ul> {this.state.sync && this.state.sync.map(song => <li key={song.id}>{song} </li>)} </ul>
         <button onClick={()=> this.onSubmit()} >Sync!</button>
       </div>

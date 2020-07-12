@@ -21,11 +21,15 @@ function ensureAuthenticated(req, res, next) {
 */
 router.get('/', ensureAuthenticated, async (req, res, next)=> {
   const authUserData = await spotifyApi.getMe();
-  const authUserId = await authUserData.body.id;
-  const authUsername = await authUserData.body.display_name;
+  const id = await authUserData.body.id;
+  const username = await authUserData.body.display_name;
+  const imageURL = await authUserData.body.images[0].url
+  const followers = await authUserData.body.followers.total
   res.json({
-    username: authUsername
-    //TODO: send other info, friends, profile pic, other stuff to display on user profile page
+    id: id,
+    image: imageURL,
+    followers: followers,
+    username: username
   });
 });
 
