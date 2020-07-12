@@ -2,7 +2,6 @@
 * @fileoverview Setting up authentication to Spotify using Passport.js.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-require('dotenv').config();
 const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const User = require('../db/models').User;
@@ -59,22 +58,12 @@ setInterval(()=> {
 passport.use(
   new SpotifyStrategy(
     {
-<<<<<<< HEAD
-      clientID: process.env.SPOTIFY_CLIENT_ID,
-      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      callbackURL: process.env.CALLBACK_URI
-    },
-    function(accessToken, refreshToken, expires_in, profile, done) {
-      process.nextTick(async function() {
-        console.log('The access token is ' + accessToken);
-=======
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: 'http://localhost:8080/login/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async ()=> {
->>>>>>> 8e459d5b92ad891e29e09b1aad1506b1723ec713
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.setRefreshToken(refreshToken);
         expireTime = expires_in;
@@ -86,11 +75,11 @@ passport.use(
                           ' seconds!'
             );
         User.findOrCreate({
-            where: {
-                spotifyId: profile.id,
-                username: profile._json.display_name,
-                email: profile.emails[0].value
-            }
+          where: {
+            username: profile.displayName,
+            email: profile.emails[0].value,
+            spotifyId: profile.id
+          }
         }).then(([user, created]) => {
           if(created){
             console.log('User created.');

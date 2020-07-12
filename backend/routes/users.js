@@ -19,14 +19,6 @@ function ensureAuthenticated(req, res, next) {
 /**
 * Loads users information if user is already authenticated.
 */
-<<<<<<< HEAD
-router.get('/', function(req, res, next) {
-  User.findAll()
-    .then(users => {
-      res.json({users: users, authUser: req.session.user})
-    })
-    .catch(err => console.log(err))
-=======
 router.get('/', ensureAuthenticated, async (req, res, next)=> {
   const authUserData = await spotifyApi.getMe();
   const authUserId = await authUserData.body.id;
@@ -35,37 +27,12 @@ router.get('/', ensureAuthenticated, async (req, res, next)=> {
     username: authUsername
     //TODO: send other info, friends, profile pic, other stuff to display on user profile page
   });
->>>>>>> 8e459d5b92ad891e29e09b1aad1506b1723ec713
 });
 
 /**
 * Creates sync between two users.
 * @param {string} user - Spotify user to create sync with.
 */
-<<<<<<< HEAD
-router.post('/sync', async function(req, res, next) {
-  let userForSync = req.body.syncUser;
-  //TODO: Check if this user is a spotify user
-  let sync = await createSync(userForSync);
-  Sync.findOrCreate({
-      where: {
-        playlistId: "Sync between "+userForSync+" and ",
-        tracks: sync
-      }
-  }).then(([sync, created]) => {
-    if(created){
-      console.log('Sync created.');
-    } else {
-      console.log('Sync already exists.');
-    }
-  }).catch(err => console.log(err));
-
-  res.json({
-    authUser: "",
-    syncUser: userForSync,
-    sync: sync
-  });
-=======
 router.post('/sync', ensureAuthenticated, async (req, res, next)=> {
   const userForSync = await req.body.user;
   //TODO: Check if this user is a spotify user
@@ -106,7 +73,6 @@ router.post('/playlist', ensureAuthenticated, async (req, res, next)=> {
 
   const addTracksResponse = await spotifyApi.addTracksToPlaylist(syncedPlaylistId, sync);
   res.json({result: createPlaylistResponse});
->>>>>>> 8e459d5b92ad891e29e09b1aad1506b1723ec713
 });
 
 //TODO: write helper function to turn list of track spotify URI into song names

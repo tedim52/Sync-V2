@@ -12,15 +12,9 @@ const spotifyApi = require('../loaders/spotify');
 const createSync = async function(otherUser) {
   try {
     //Get names of both spotify users
-<<<<<<< HEAD
-    let authUserData = await spotifyApi.getMe();
-    let authUsername = await authUserData.id;
-    let otherUsername = otherUser;
-=======
     const authUserData = await spotifyApi.getMe();
     const authUsername = await authUserData.body.display_name
     const otherUsername = otherUser;
->>>>>>> 8e459d5b92ad891e29e09b1aad1506b1723ec713
 
     //Get songs from both users music libraries
     const [authUserSongs, otherUserSongs] = await Promise.all([getSongs(authUsername),
