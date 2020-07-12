@@ -9,15 +9,16 @@ class Sync extends Component {
 
 
   onSubmit = async () => {
-    console.log(this.props.username);
-    const res = await fetch("/users/sync",
+    console.log(this.state.username);
+    const response = await fetch("/users/sync",
                           { method:"POST",
                             headers: {
                               'Content-Type':'application/json'
                             },
                             body: JSON.stringify({user: this.state.username})
                           }).catch(e => console.log(e));
-    const data = await res.json();
+    const data = await response.json();
+    console.log(data)
     this.setState({ sync: data.sync});
     console.log(data);
   }

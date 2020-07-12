@@ -9,6 +9,7 @@ class UserPage extends Component {
         <div>
           <h2>Sync</h2>
           <Sync/>
+          <h2>Past Syncs</h2>
         </div>
       </div>
     );

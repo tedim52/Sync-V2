@@ -3,6 +3,7 @@
 * @author tediMitiku <tbm42@cornell.edu>
 */
 const spotifyApi = require('../loaders/spotify');
+const models = require('../db/models');
 
 /**
 * Creates sync between two spotify users.
@@ -13,7 +14,7 @@ const createSync = async function(otherUser) {
   try {
     //Get names of both spotify users
     const authUserData = await spotifyApi.getMe();
-    const authUsername = await authUserData.body.display_name
+    const authUsername = await authUserData.body.id
     const otherUsername = otherUser;
 
     //Get songs from both users music libraries
@@ -21,6 +22,20 @@ const createSync = async function(otherUser) {
                                                                  getSongs(otherUsername)]);
     //Take intersection of song lists
     const sync = await intersection(authUserSongs, otherUserSongs);
+
+    //Add Sync to databse
+    models.Sync.findOrCreate({
+      where: {
+        tracks: sync
+      }
+    }).then(([sync, created]) => {
+      if(created){
+        console.log('Sync created.');
+      } else {
+        console.log('Sync already exists.');
+      }
+    }).catch(err => console.log(err));
+
     return sync;
   } catch(e) {
     console.log(e);
@@ -57,7 +72,7 @@ const getPlaylistSongs = async function(playlistId) {
     let songs = [];
     const tracksJSON = await spotifyApi.getPlaylist(playlistId);
     const tracks = await tracksJSON.body.tracks.items;
-    const trackList = await Promise.all(tracks.map(async ({track})=> songs.push(track.uri)));
+    const trackList = await Promise.all(tracks.map(async ({track})=> songs.push(track.name)));
     return songs;
   } catch(e) {
     console.log(e);
