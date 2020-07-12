@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import Sync from './Sync.jsx'
 
 class UserPage extends Component {
@@ -28,6 +29,19 @@ class UserPage extends Component {
           </div>
         )}
         <Sync />
+=======
+import Sync from './Sync'
+
+class UserPage extends Component {
+  render() {
+    return (
+      <div>
+        <h1>Users</h1>
+        <div>
+          <h2>Sync</h2>
+          <Sync/>
+        </div>
+>>>>>>> 8e459d5b92ad891e29e09b1aad1506b1723ec713
       </div>
     );
   }

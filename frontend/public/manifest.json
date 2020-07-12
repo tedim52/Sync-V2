@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "short_name": "React App",
   "name": "Create React App Sample",
   "icons": [
@@ -22,4 +23,10 @@
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
+=======
+  "short_name": "Sync",
+  "name": "Sync",
+  "display": "standalone",
+  "theme_color": "#000000"
+>>>>>>> 8e459d5b92ad891e29e09b1aad1506b1723ec713
 }

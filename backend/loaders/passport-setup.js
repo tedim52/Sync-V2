@@ -9,30 +9,57 @@ const User = require('../db/models').User;
 const Sequelize = require('sequelize');
 const spotifyApi = require('./spotify');
 
-// Passport session setup.
-//   To support persistent login sessions, Passport needs to be able to
-//   serialize users into and deserialize users out of the session. Typically,
-//   this will be as simple as storing the user ID when serializing, and finding
-//   the user by ID when deserializing. However, since this example does not
-//   have a database of user records, the complete spotify profile is serialized
-//   and deserialized.
-passport.serializeUser(function(user, done) {
+// Passport session setup for persistent login
+passport.serializeUser((user, done)=> {
   done(null, user.id);
 });
 
-passport.deserializeUser(function(obj, done) {
-  User.findByPk(obj.id).then(user => {
+passport.deserializeUser((id, done)=> {
+  User.findByPk(id).then(user => {
       done(null, user);
-  })
+  });
 });
 
-// Use the SpotifyStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, expires_in
-//   and spotify profile), and invoke a callback with a user object.
+//Allow permanent Spotify API data retrieval through refresh token
+var tokenExpirationEpoch;
+var expireTime;
+var numberOfTimesUpdated = 0;
+
+//Generates new Spotify API access token upon expiration
+setInterval(()=> {
+  //If a refresh token exists, start tracking it
+  if(spotifyApi.getAccessToken() != null) {
+    //Every 20 minutes, print message
+    console.log(
+      'Time left: ' +
+        Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) +
+        ' seconds left!'
+    );
+    numberOfTimesUpdated++;
+
+    // Times up, refresh the token and stop printing
+    if (numberOfTimesUpdated > 2) {
+      numberOfTimesUpdated = 0;
+      clearInterval(this);
+
+      // Refresh token and print the new time to expiration
+      spotifyApi.refreshAccessToken().then((data)=> {
+        tokenExpirationEpoch = new Date().getTime() / 1000 + expireTime;
+        console.log(
+          'Refreshed token. It now expires in ' +
+            Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) +
+          ' seconds!'
+        );
+      }).catch((err)=> { console.log('Could not refresh the token!', err.message) });
+    }
+  }
+}, 720,000);
+
+//Spotify Strategy for user authentication
 passport.use(
   new SpotifyStrategy(
     {
+<<<<<<< HEAD
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       callbackURL: process.env.CALLBACK_URI
@@ -40,8 +67,24 @@ passport.use(
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async function() {
         console.log('The access token is ' + accessToken);
+=======
+      clientID: process.env.CLIENT_ID,
+      clientSecret: process.env.CLIENT_SECRET,
+      callbackURL: 'http://localhost:8080/login/callback'
+    },
+    function(accessToken, refreshToken, expires_in, profile, done) {
+      process.nextTick(async ()=> {
+>>>>>>> 8e459d5b92ad891e29e09b1aad1506b1723ec713
         spotifyApi.setAccessToken(accessToken);
         spotifyApi.setRefreshToken(refreshToken);
+        expireTime = expires_in;
+        console.log(expires_in);
+        tokenExpirationEpoch =
+          new Date().getTime() / 1000 + expires_in;
+            console.log( 'Retrieved token. It expires in ' +
+                          Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) +
+                          ' seconds!'
+            );
         User.findOrCreate({
             where: {
                 spotifyId: profile.id,
@@ -54,8 +97,8 @@ passport.use(
           } else {
             console.log('User already exists.');
           }
+          done(null, user);
         }).catch(err => console.log(err));
-        done(null, profile);
       });
     }
   )
