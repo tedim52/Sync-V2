@@ -14,7 +14,7 @@ const createSync = require('../core/discjockey');
 //   login page.
 function ensureAuthenticated(req, res, next) {
   if (!req.isAuthenticated()) {
-    res.redirect("http://localhost:8000/login/auth/spotify");
+    res.redirect("http://localhost:8080/login/auth/spotify");
   }
   return next();
 }
@@ -30,8 +30,6 @@ router.get('/', ensureAuthenticated, (req, res, next)=> {
 * Creates sync between two users.
 * @param {string} user - Spotify user to create sync with.
 */
-<<<<<<< HEAD
-=======
 router.post('/sync', async (req, res, next)=> {
   const userForSync = await req.body.user;
   const sync = await createSync(userForSync);
@@ -40,6 +38,5 @@ router.post('/sync', async (req, res, next)=> {
     sync: sync
   });
 });
->>>>>>> 57c112a97ab32e86fab05d1fa4f70f3734a99ea9
 
 module.exports = router;

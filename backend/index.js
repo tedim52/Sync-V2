@@ -16,7 +16,7 @@ const app = express();
 
 //Setup Cookie Session for persistent login
 app.use(session({
-  secret: process.env.COOKIE_KEY,
+  secret: "lsajf6fhj4k6jhnjsdjhg83j",
   saveUninitialized: true,
   resave: true,
 }));

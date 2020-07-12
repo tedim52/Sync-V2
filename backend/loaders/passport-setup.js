@@ -63,15 +63,9 @@ setInterval(()=> {
 passport.use(
   new SpotifyStrategy(
     {
-<<<<<<< HEAD
       clientID: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
       callbackURL: process.env.CALLBACK_URI
-=======
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: 'http://localhost:8080/login/callback'
->>>>>>> 57c112a97ab32e86fab05d1fa4f70f3734a99ea9
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async ()=> {
