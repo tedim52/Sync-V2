@@ -6,7 +6,7 @@ const passport = require('passport');
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const User = require('../db/models').User;
 const Sequelize = require('sequelize');
-const spotifyApi = require('./spotify');
+const { spotifyApi } = require('./spotify');
 
 // Passport session setup for persistent login
 passport.serializeUser((user, done)=> {
@@ -44,6 +44,8 @@ setInterval(()=> {
       // Refresh token and print the new time to expiration
       spotifyApi.refreshAccessToken().then((data)=> {
         tokenExpirationEpoch = new Date().getTime() / 1000 + expireTime;
+        console.log(data);
+        //Update user in database to contain new access and refresh token
         console.log(
           'Refreshed token. It now expires in ' +
             Math.floor(tokenExpirationEpoch - new Date().getTime() / 1000) +
@@ -52,7 +54,7 @@ setInterval(()=> {
       }).catch((err)=> { console.log('Could not refresh the token!', err.message) });
     }
   }
-}, 720,000);
+}, 720000);
 
 //Spotify Strategy for user authentication
 passport.use(
@@ -65,9 +67,9 @@ passport.use(
     function(accessToken, refreshToken, expires_in, profile, done) {
       process.nextTick(async ()=> {
         spotifyApi.setAccessToken(accessToken);
+        console.log(accessToken);
         spotifyApi.setRefreshToken(refreshToken);
         expireTime = expires_in;
-        console.log(expires_in);
         tokenExpirationEpoch =
           new Date().getTime() / 1000 + expires_in;
             console.log( 'Retrieved token. It expires in ' +
@@ -77,14 +79,18 @@ passport.use(
         User.findOrCreate({
           where: {
             username: profile.username,
+            spotifyId: profile.id,
             email: profile.emails[0].value
           }
-        }).then(([user, created]) => {
+        }).then(async ([user, created]) =>  {
           if(created){
             console.log('User created.');
           } else {
             console.log('User already exists.');
           }
+          user.accessToken = accessToken;
+          user.refreshToken = refreshToken;
+          await user.save();
           done(null, user);
         }).catch(err => console.log(err));
       });

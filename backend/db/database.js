@@ -1,5 +1,5 @@
 /**
-* @fileoverview Sets up sequelize connection to database on server.
+* @fileoverview Sets up Sequelize connection to database on server.
 * @author tediMitiku <tbm42@cornell.edu>
 */
 const { Sequelize } = require('sequelize');

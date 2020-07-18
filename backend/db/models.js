@@ -2,12 +2,12 @@
 * @fileoverview Defines User and Sync tables and relationship in database.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-const {Sequelize, Model, DataTypes}  = require('sequelize');
+const { Sequelize, Model, DataTypes }  = require('sequelize');
 const db = require('./database');
 
 /**
 * A User
-* @typedfe {Object} User
+* @typedef {Object} User
 * @property {string} username - Spotify username.
 * @property {string} email
   @property {Sync} syncs - The syncs the user has created with other users.
@@ -18,25 +18,42 @@ User.init({
     type: DataTypes.STRING,
     unique: true,
     allowNull: false
-  },
+    },
   email: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull:false
-    }
-  }, {
+    allowNull:true
+    },
+  spotifyId: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false
+  },
+  accessToken: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: true
+  },
+  refreshToken: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: true
+  },
+},
+  {
     sequelize: db,
     modelName: 'User',
     tableName:'User',
     timestamps: false
-  });
+});
 
-  /**
-  * A Sync
-  * @typedfe {Object} Sync
-  * @property {string} playlistId - The Spotify playlist id if sync is made into playlist.
-  * @property {Object} users - The users sync is assigned to.
-  */
+
+/**
+* A Sync
+* @typedef {Object} Sync
+* @property {string} playlistId - The Spotify playlist id if sync is made into playlist.
+* @property {Object} tracks- Array of spotify track URI's.
+*/
 class Sync extends Model {}
 Sync.init({
   playlistId: {
