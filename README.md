@@ -8,6 +8,6 @@ Sync is a web app that will allow music listeners to “sync” their music pref
 
 Created using ReactJS frontend and Express/NodeJs JSON API backend. Designed with Figma. Deployed with Google App Engine.
 
-Created by @Tedi Mitiku @Vaughn Campos @Eric Osband
+Created by @Tedi Mitiku @Vaughn Campos @Eric Osband @Flora Liu
 
 planning to move to mobile.
