@@ -2,7 +2,7 @@
 * @fileoverview Main algorithm for creating synced playlist between users.
 * @author tediMitiku <tbm42@cornell.edu>
 */
-const spotifyApi = require('../loaders/spotify');
+const { spotifyApi } = require('../loaders/spotify');
 
 /**
 * Creates sync between two spotify users.
@@ -57,7 +57,7 @@ const getPlaylistSongs = async function(playlistId) {
     let songs = [];
     const tracksJSON = await spotifyApi.getPlaylist(playlistId);
     const tracks = await tracksJSON.body.tracks.items;
-    const trackList = await Promise.all(tracks.map(async ({track})=> songs.push(track.uri)));
+    const trackList = await Promise.all(tracks.map(async ({track})=> songs.push(track.name)));//Track URI needs to be converted to track name
     return songs;
   } catch(e) {
     console.log(e);
@@ -70,6 +70,25 @@ const getPlaylistSongs = async function(playlistId) {
 const intersection = async function(listOne, listTwo) {
   let sync = listOne.filter(e => listTwo.includes(e));
   return sync;
+}
+
+/**
+* Helper function to convert a list of Spotify track URI's to a list of song names.
+* @param {Array} list - List of track URI's.
+* @returns {Array} songNames - List of track names.
+*/
+const convertTrackName = async (list) => {
+  try {
+    const songNames = [];
+    list.forEach(async (trackURI) => {
+        const songInfo= await spotifyApi.getTrack(trackURI);
+        const songName = await songInfo.body.name;
+        songNames.push(songName);
+    });
+    return songNames;
+  } catch(e) {
+    console.log(e);
+  }
 }
 
 

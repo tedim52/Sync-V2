@@ -4,7 +4,7 @@
 */
 const express = require('express');
 const router = express.Router();
-const {User, Sync} = require('../db/models');
+const { User, Sync } = require('../db/models');
 const passport = require('passport');
 
 /**
@@ -20,7 +20,7 @@ router.get('/', (req, res, next)=> {
 });
 
 /**
-* Spotify authenticatoin route.
+* Spotify authentication.
 */
 router.get('/auth/spotify',
             passport.authenticate('spotify', {
@@ -29,8 +29,10 @@ router.get('/auth/spotify',
               showDialog: true }), (req, res)=> {
 });
 
+//Create fake authentication strategy for testing purposes
+
 /**
-* Spotify authentication callback handler route.
+* Spotify authentication callback handler.
 */
 router.get(
   '/callback',
@@ -40,7 +42,7 @@ router.get(
 });
 
 /**
-* Removes authenticated users cookies and redirect to landing page.
+* Logout authenticated user, removes cookies and redirect to landing page.
 */
 router.get('/logout', (req, res)=> {
   req.logout();
