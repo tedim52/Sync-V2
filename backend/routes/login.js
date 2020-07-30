@@ -29,7 +29,11 @@ router.get('/auth/spotify',
               showDialog: true }), (req, res)=> {
 });
 
-//Create fake authentication strategy for testing purposes
+/**
+* Fake authentication route for testing.
+*/
+router.get('/auth/test', passport.authenticate('mock'), (req, res)=> {
+});
 
 /**
 * Spotify authentication callback handler.

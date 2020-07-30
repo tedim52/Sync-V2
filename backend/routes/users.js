@@ -25,6 +25,7 @@ router.get('/', ensureAuthenticated, async (req, res, next)=> {
                                                       authUserData.body.display_name,
                                                       authUserData.body.images[0].url]);
   res.json({
+    success: true,
     id: id,
     image: imageURL,
     username: username
@@ -41,11 +42,12 @@ router.post('/sync', ensureAuthenticated, async (req, res, next)=> {
   //Check if user is a Spotify user
   spotifyApi.getUser(userForSync).catch(err => {
     console.log(err);
-    res.status(404).send("User not found.");
+    res.status(404).json({success: false, message: "Spotify user does not exist."});
   });
 
   const syncNames = await createSync(userForSync);
-  res.json({
+  res.status(200)json({
+    success: true,
     syncedUser: userForSync,
     sync: syncNames
   });
@@ -70,8 +72,7 @@ router.post('/playlist', ensureAuthenticated, async (req, res, next)=> {
   const syncedPlaylistId = await createPlaylistResponse.body.id;
 
   const addTracksResponse = await spotifyApi.addTracksToPlaylist(syncedPlaylistId, sync);
-  res.json({result: createPlaylistResponse});
+  res.status(200).json({success: true, result: createPlaylistResponse});
 });
-
 
 module.exports = router;

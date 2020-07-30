@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node index.js",
+    "start": "NODE_ENV=production && node index.js",
+    "dev": "NODE_ENV=development && node index.js",
     "test": "mocha || true"
   },
   "dependencies": {
