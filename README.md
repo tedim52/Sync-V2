@@ -1,6 +1,6 @@
 # Sync-V2
 
-Inspired by a class project that was inspired by a tik tok. 
+**Inspired by a class project that was inspired by a tik tok.** 
 
 Imagine that you’re sitting in the front of an uber on your way home from a fun night out in the vibrant nightlife of your city. You’ve decided to do uber pool obviously because you spent just a little too much money. So there are three strangers in the back of the uber-who like you are coming back from a night out. 
 
