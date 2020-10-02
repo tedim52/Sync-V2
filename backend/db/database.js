@@ -8,8 +8,9 @@ const { Sequelize } = require('sequelize');
 * Sequelize instance.
 * @module
 */
-const db = new Sequelize('sync', 'root', 'cloud114', {
-  dialect: 'mysql'
+const db = new Sequelize('sync', 'root', 'Cornellvac62', {
+  dialect: 'mysql',
+  host: 'localhost'
 })
 
 module.exports = db;

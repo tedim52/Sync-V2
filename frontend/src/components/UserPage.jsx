@@ -28,7 +28,6 @@ class UserPage extends Component {
       </div>
     );
   }
-
 }
 
 export default UserPage;
