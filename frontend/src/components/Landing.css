@@ -4,44 +4,46 @@
   height: 100vh;
   display:flex;
   flex-direction:column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   padding: 0px 34px;
   color: #fff;
   background-position: center;
   background-size: cover;
   max-width: 827px;
   margin-bottom: 100px;
+  margin-top: 100px;
 }
 
 h1, h3 {
   font-family: Montserrat;
   color: #e2f3f5;
-  display:flex;
   font-size: 100px;
+  text-align:left;
+
 }
 
 h3 {
-  font-size: 50px;
+  font-size: 30px;
 }
 
 a{
   text-decoration: none;
+  color: white;
 }
 
 button {
-  width: 238px;
-  height: 80px;
+  width: 245px;
+  height: 60px;
   border-radius: 100px;
-  background-color: #1DB954;
+  background-color: #44b6d8;
   position: relative;
   display: block;
-  color: #e2f3f5;
   font-family: Montserrat;
-  padding: 15px 26px 21px 50px;
+  padding: 10px 10px 10px 10px;
   transition: 0.1s;
-  font-size: 18px;
+  font-size: 20px;
   letter-spacing: 1.5px;
-  margin: 47px auto 0;
+  margin-left:0px;
   text-decoration: none;
 }

@@ -3,6 +3,7 @@ import './App.css'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Landing from './Landing.jsx'
 import UserPage from './UserPage.jsx'
+import Navbar from './Navbar.jsx'
 
 class App extends Component {
   state = {
@@ -13,6 +14,7 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
+          <Route path='/' component={Navbar}></Route>
           <Route exact path='/' component={Landing}></Route>
           <Route path='/users' component={UserPage}></Route>
         </Router>
